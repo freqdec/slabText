@@ -14,7 +14,9 @@
                         "wrapAmpersand"         : true,
                         // Under what pixel width do we remove the slabtext styling?
                         "headerBreakpoint"      : null,
-                        "viewportBreakpoint"    : null
+                        "viewportBreakpoint"    : null,
+                        // Don't attach a resize event
+                        "noResizeEvent"         : false
                 };
                 
                 // Add the slabtexted classname to the body to initiate the styling of
@@ -142,25 +144,27 @@
                         // Immediate resize
                         resizeSlabs();     
                         
-                        // Window resize event          
-                        $(window).resize(function() {
-                                // Only run the resize code if the viewport width has changed.
-                                // we ignore the viewport height as it will be constantly changing 
-                                // due to the font-size resizing and IE fires a resize event whenever
-                                // vertical height has changed leading to an endless loop and
-                                // locked browser. Poor IE.
-                                
-                                // Could wrap this in conditional comments?
-                                if($(window).width() == viewportWidth) {
-                                        return;
-                                };
-                                
-                                viewportWidth = $(window).width();
-                                
-                                // Throttle the resize event to 300ms
-                                clearTimeout(resizeThrottle);
-                                resizeThrottle = setTimeout(resizeSlabs, 300);
-                        });        
+                        if(!settings.noResizeEvent) {
+                                // Window resize event          
+                                $(window).resize(function() {
+                                        // Only run the resize code if the viewport width has changed.
+                                        // we ignore the viewport height as it will be constantly changing 
+                                        // due to the font-size resizing and IE fires a resize event whenever
+                                        // vertical height has changed leading to an endless loop and
+                                        // locked browser. Poor IE.
+                                        
+                                        // Could wrap this in conditional comments?
+                                        if($(window).width() == viewportWidth) {
+                                                return;
+                                        };
+                                        
+                                        viewportWidth = $(window).width();
+                                        
+                                        // Throttle the resize event to 300ms
+                                        clearTimeout(resizeThrottle);
+                                        resizeThrottle = setTimeout(resizeSlabs, 300);
+                                });
+                        };        
                 });
     };
 })(jQuery);

@@ -205,6 +205,8 @@
     <dd>An Integer value that indicates the minimum pixel width the viewport may have before the slabtext treatment is removed. There is no default value.</dd>
     <dt>headerBreakpoint</dt>
     <dd>An Integer value that indicates the minimum pixel width the header may have before the slabtext treatment is removed. There is no default value.</dd>
+    <dt>noResizeEvent</dt>
+    <dd>A Boolean value that instructs the script <em>not</em> to set the <code>window.resize</code> event (TRUE). Useful for those of you using a fixed width layout. Defaults to FALSE.</dd> 
   </dl>
   <p>It&#8217;s also worth noting that any non-breaking space character used to prevent widowed words within the original, non-adjusted headline will also be included within the adjusted headline.</p>
   <h2 id="h7">A note on the CSS</h2>
@@ -241,7 +243,7 @@
     <li>Always call the script <em>after</em> all <code>fontface</code> fonts have downloaded (if using). I&#8217;ve hacked this for the demo to enable you to see the headline transformation as the script kicks-in but you should always use google WebFont loaders <code>active()</code> and <code>inactive()</code> callbacks to launch the slabText treatment (or a similar "font loaded" callback feature from another font provider).</li>
   </ol>
   <h2 id="h9">Credit where credit is due</h2>       
-  <p>Based on the nice, shiny <a href="http://fittextjs.com/">fittext</a> jQuery plugin by <a href="http://paravelinc.com/">Paravel</a> &amp; the wonderful <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> by Erik Loyer.</p>                      
+  <p>Based on the nice, shiny <a href="http://fittextjs.com/">fittext</a> jQuery plugin by <a href="http://paravelinc.com/">Paravel</a> &amp; the wonderful <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> by Erik Loyer. Zach Leatherman has also written a jQuery plugin named <a href="http://www.zachleat.com/web/bigtext-makes-text-big/">BigText</a> with similar but not exact functionality which is well worth a visit.</p>                      
   <h2 id="h10">Grab the code</h2>
   <p>The code can be <a href="http://github.com/freqDec/slabText/">downloaded from github</a>. Both minified and unminified versions are included within the bundle. The minified version currently clocks-in at just over 2k &ndash; this drops to 1k when gzipped.</p>       
   
