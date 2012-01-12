@@ -155,6 +155,17 @@
                                 font-size:22px;
                                 }
                 }        
+        @media screen and (max-width: 460px) 
+                {
+                        h1
+                                {
+                                font-size:26px;
+                                }
+                        h2
+                                {
+                                font-size:18px;
+                                }
+                }
     </style>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -162,7 +173,7 @@
 </head>
 <body>
   <h1 id="h1">slabText &ndash; a jQuery plugin for producing big, bold &amp; responsive headlines</h1>                
-  <p>I&#8217;ve been wanting to attempt a port of Erik Loyers <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> for quite some time now and seeing Paravels <a href="http://fittextjs.com/">fittext</a> jQuery plug-in, in combination with a gloriously hassle-free lunch hour gave me the impetus to attempt it. This is the result &ndash; resize the browser viewport to see the effect in action.</p>        
+  <p>I&#8217;ve been wanting to attempt a port of Erik Loyers <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> for quite some time now and seeing Paravels <a href="http://fittextjs.com/">fittext</a> jQuery plugin, in combination with a gloriously hassle-free lunch hour gave me the impetus to attempt it. This is the result &ndash; resize the browser viewport to see the effect in action.</p>        
   <h2 id="h2">So what does the script do again?</h2>
   <p>Put simply, the script splits headlines into rows before resizing each row to fill the available horizontal space. The ideal number of characters to set on each row is calculated by dividing the available width by the CSS font-size &ndash; the script then uses this <em>ideal character count</em> to split the headline into word combinations that are displayed as separate rows of text. More <a href="#h11">examples</a> can be viewed further down the page.</p> 
   <h2 id="h3">Calculated and preset word combinations</h2>
@@ -255,8 +266,8 @@
   <h1>The sad tale of the brothers Grossbart</h1>
   <h1>The Windup Girl</h1>
   <h1>When Gravity Fails</h1>
-  <h1>The Mortal Engines Quartet</h1>  
-  <h1>A Song of Ice and Fire</h1>
+  <h1>Psychotic Reactions and Carburetor Dung</h1>
+  <h1>Mortal Engines</h1>  
   <h1>Mansfield Park</h1>
   <footer>
     <section>
