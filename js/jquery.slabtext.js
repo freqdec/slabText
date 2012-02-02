@@ -32,7 +32,7 @@
                         
                         var $this               = $(this),                              
                             keepSpans           = $("span.slabtext", $this).length,
-                            words               = keepSpans ? [] : String($this.text()).replace(/\s{2,}/g).split(" "),                              
+                            words               = keepSpans ? [] : String($.trim($this.text())).replace(/\s{2,}/g, " ").split(" "),                              
                             origFontSize        = null,                                 
                             idealCharPerLine    = null,                                 
                             fontRatio           = settings.fontRatio,                   
