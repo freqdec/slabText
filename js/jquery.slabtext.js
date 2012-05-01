@@ -16,7 +16,9 @@
             "headerBreakpoint"      : null,
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
-            "noResizeEvent"         : false
+            "noResizeEvent"         : false,
+            // Force to render in a single line
+            "forceSingleLine"       : false
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -39,6 +41,7 @@
                 forceNewCharCount   = settings.forceNewCharCount,
                 headerBreakpoint    = settings.headerBreakpoint,
                 viewportBreakpoint  = settings.viewportBreakpoint,
+                forceSingleLine     = settings.forceSingleLine,
                 resizeThrottle      = null,
                 viewportWidth       = $(window).width();                                   
             
@@ -89,6 +92,8 @@
                         preDiff,
                         postDiff;
                     
+                    if(forceSingleLine) newCharPerLine = 99999;
+
                     if(newCharPerLine != idealCharPerLine) {
                         idealCharPerLine = newCharPerLine;
                                                                 
