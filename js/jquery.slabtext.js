@@ -16,7 +16,9 @@
             "headerBreakpoint"      : null,
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
-            "noResizeEvent"         : false
+            "noResizeEvent"         : false,
+            // Force to render in a single line
+            "forceSingleLine"       : false
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -39,6 +41,7 @@
                 forceNewCharCount   = settings.forceNewCharCount,
                 headerBreakpoint    = settings.headerBreakpoint,
                 viewportBreakpoint  = settings.viewportBreakpoint,
+                forceSingleLine     = settings.forceSingleLine,
                 resizeThrottle      = null,
                 viewportWidth       = $(window).width();                                   
             
@@ -89,6 +92,8 @@
                         preDiff,
                         postDiff;
                     
+                    if(forceSingleLine) newCharPerLine = 99999;
+
                     if(newCharPerLine != idealCharPerLine) {
                         idealCharPerLine = newCharPerLine;
                                                                 
@@ -160,7 +165,10 @@
                     // Better "dumb" and fast...
                     if(diff) {
                         $span.css((wordSpacing ? 'word' : 'letter') + '-spacing', (diff / (wordSpacing ? innerText.split(" ").length - 1 : innerText.length)).toFixed(3) + "px");
-                    };                                                                                                                        
+                    };  
+
+                    //make sure the box is the same height as the text. 
+                    $jspan.css({'height':(fontSize * ratio).toFixed(3) + "px",'line-height':(fontSize * ratio).toFixed(3) + "px"});                                                                                                                     
                 });
                     
                 // Add the class slabtextdone to set a display:block on the child spans
