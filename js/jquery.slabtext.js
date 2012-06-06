@@ -124,10 +124,10 @@
                                 finalText = postText;
                             };
 
-                            lineText.push('<span class="slabtext">' + (settings.wrapAmpersand ? finalText.replace("&", '<span class="amp">&amp;</span>') : finalText) + "</span>");
+                            lineText.push('<span class="slabtext">' + $.trim(settings.wrapAmpersand ? finalText.replace("&", '<span class="amp">&amp;</span>') : finalText) + "</span>");
                         };
                                     
-                        $this.html(lineText.join(""));
+                        $this.html(lineText.join(" "));
                     };        
                 } else {
                     // We only need the font-size for the resize-to-fit functionality
