@@ -17,7 +17,7 @@
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
             "noResizeEvent"         : false,
-            "maxFontSize"           : 80
+            "maxFontSize"           : 9999
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
