@@ -16,7 +16,8 @@
             "headerBreakpoint"      : null,
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
-            "noResizeEvent"         : false
+            "noResizeEvent"         : false,
+            "maxFontSize"           : 9999
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -150,7 +151,7 @@
                     fontSize = parseFloat(this.style.fontSize) || origFontSize;
                     
                     // Resize font    
-                    $span.css('font-size', (fontSize * ratio).toFixed(3) + "px");
+                    $span.css('font-size', Math.min((fontSize * ratio).toFixed(3), settings.maxFontSize) + "px");
                     
                     // Do we still have space to try to fill or crop
                     diff = parentWidth - $span.width();
