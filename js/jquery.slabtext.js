@@ -42,6 +42,8 @@
                 viewportBreakpoint  = settings.viewportBreakpoint,
                 resizeThrottle      = null,
                 viewportWidth       = $(window).width();                                   
+                // Extract the first href from source text
+                hedLink             = $this.find("a:first").attr("href");
             
             // Calculates the pixel equivalent of 1em within the current header
             var grabPixelFontSize = function() {
@@ -129,6 +131,10 @@
                         };
                                     
                         $this.html(lineText.join(" "));
+                        // If we have a hedLink, add it back just inside our target, around all the slabText spans
+                        if (hedLink) {
+                            $this.wrapInner('<a href="' + hedLink + '" />');
+                        }
                     };        
                 } else {
                     // We only need the font-size for the resize-to-fit functionality
