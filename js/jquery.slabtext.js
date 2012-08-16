@@ -43,7 +43,8 @@
                 resizeThrottle      = null,
                 viewportWidth       = $(window).width();                                   
                 // Extract the first href from source text
-                hedLink             = $this.find("a:first").attr("href");
+                headLink            = $this.find("a:first").attr("href"),
+                linkTitle           = headLink ? $this.find("a:first").attr("title") : "";
             
             // Calculates the pixel equivalent of 1em within the current header
             var grabPixelFontSize = function() {
@@ -131,10 +132,10 @@
                         };
                                     
                         $this.html(lineText.join(" "));
-                        // If we have a hedLink, add it back just inside our target, around all the slabText spans
-                        if (hedLink) {
-                            $this.wrapInner('<a href="' + hedLink + '" />');
-                        }
+                        // If we have a headLink, add it back just inside our target, around all the slabText spans
+                        if (headLink) {
+                            $this.wrapInner('<a href="' + headLink + '" ' + (linkTitle ? 'title="' + linkTitle + '" ' : '') + '/>');
+                        };
                     };        
                 } else {
                     // We only need the font-size for the resize-to-fit functionality

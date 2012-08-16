@@ -66,6 +66,10 @@
             {
             color:#111;             
             }
+        h1 a
+            {
+            text-decoration:none;
+            }
         p
             {
             margin:0 0 1.5em 0;
@@ -104,7 +108,7 @@
             font-style:italic;
             font-weight:lighter;
             }
-        /* Set font-sizes for the headings */
+        /* Set font-sizes for the headings to be given the slabText treatment */
         h1
             {
             text-align:left;
@@ -126,7 +130,8 @@
             {
             font-size: 25px;
             }
-        /* Adjust the line-height for all headlines that have been slabtexted */
+        /* Adjust the line-height for all headlines that have been given the
+           slabtext treatment. Use a unitless line-height to stop sillyness */
         .slabtexted h1
             {
             line-height:.9;
@@ -306,6 +311,8 @@
   <h1>Mansfield Park</h1>
   <hr />
   <h1>The Importance of being Earnest</h1>
+  <hr />
+  <h1><a href="http://en.wikipedia.org/wiki/Dracula" title="The Dracula wikipedia page">Dracula</a></h1>
   <footer>
     <section>
       <p id="fn1"><a href="#r1">(1)</a> Of course, you can always use Javascript to inject the <code>&lt;span class="slabtext"&gt;</code> elements into the headline before calling the plugin &ndash; which would keep the markup squeaky clean and cruft free. Here&#8217;s a quick example of how it might be done:</p>
