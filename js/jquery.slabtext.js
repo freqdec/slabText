@@ -17,7 +17,10 @@
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
             "noResizeEvent"         : false,
-            "maxFontSize"           : 9999
+            // Maximum font size
+            "maxFontSize"           : 9999,
+            // Stretching short slabs
+            "stretchSlabs"          : true
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -161,6 +164,11 @@
                     
                     // Do we still have space to try to fill or crop
                     diff = parentWidth - $span.width();
+                    
+                    // In case we don't need stretching for slabs
+                    if (!settings.stretchSlabs && diff > 0) {
+                      diff = 0;
+                    }
                     
                     // A "dumb" tweak in the blind hope that the browser will
                     // resize the text to better fit the available space.
