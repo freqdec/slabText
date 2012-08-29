@@ -181,7 +181,7 @@
                     }
             }
     </style>
-    <!--[if lte IE 6]>
+    <!--[if lte IE 7]>
     <style>
     body
         {
@@ -198,7 +198,7 @@
   <h1 id="h1">slabText &ndash; a jQuery plugin for producing big, bold &amp; responsive headlines</h1>                
   <p>I&#8217;ve been wanting to attempt a port of Erik Loyer&#8217;s <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> for quite some time now and seeing Paravel&#8217;s <a href="http://fittextjs.com/">fittext</a> jQuery plugin, in combination with a gloriously hassle-free lunch hour gave me the impetus to attempt it. This is the result &ndash; resize the browser viewport to see the effect in action.</p>        
   <h2 id="h2">So what does the script do again?</h2>
-  <p>Put simply, the script splits headlines into rows before resizing each row to fill the available horizontal space. The ideal number of characters to set on each row is calculated by dividing the available width by the CSS font-size &ndash; the script then uses this <em>ideal character count</em> to split the headline into word combinations that are displayed as separate rows of text. Many <a href="#h11">more examples</a> can be viewed further down the page.</p> 
+  <p>Put simply, the script splits headlines into rows before resizing each row to fill the available horizontal space. The ideal number of characters to set on each row is calculated by dividing the available width by the pixel font-size &ndash; the script then uses this <em>ideal character count</em> to split the headline into word combinations that are displayed as separate rows of text. Many, many <a href="#h12">more examples</a> can be viewed further down the page.</p>
   <h2 id="h3">Calculated and preset word combinations</h2>
   <p>While the script does an admirable job at automating the creation of the individual rows, there are certainly situations in which you would choose to control the word combinations used to split the headline.</p>
   <p>This can be achieved by presetting the word combinations (using <code>&lt;span class="slabtext"&gt;</code> wrappers) within the markup<sup><a href="#fn1" id="r1">[1]</a></sup>. Should the script detect that the headline has been preset, it will not attempt to dynamically create the word combinations and simply fallback to resizing the preset rows to fit the available horizontal space.</p>
@@ -213,10 +213,12 @@
     <p>The following word combinations are preset within the markup</p>
     <h1 id="studio-one"><span class="slabtext">For one night only</span> <span class="slabtext">Jackie Mittoo</span> <span class="slabtext">with special Studio One guests</span> <span class="slabtext">Dillinger <span class="amp">&amp;</span> Lone Ranger</span></h1>                
   </div>
-  <h2 id="h4">Being responsibly responsive</h2>
+  <h2 id="h4">Headers containing links</h2>
+  <p>If the original header contains a link (or should itself have an href set), the generated spans will be wrapped in a link that uses the same href.</p>
+  <h2 id="h5">Being responsibly responsive</h2>
   <p>You may wish to remove the slabtext treatment entirely should either the viewport or the header element resize to below a certain, predefined width; for example, if the viewport width drops to below 380 pixels. This can be achievied by using the <code>viewportBreakpoint</code> and <code>headerBreakpoint</code> plugin options, <a href="#h6">detailed below</a>.</p>
   <p>This demo page has set <code>viewportBreakpoint</code> to be 380 pixels. Resizing the browser window to anything below this should remove the slabtext treatment from the headlines altogether.</p>
-  <h2 id="h5">Behind the scenes</h2>                
+  <h2 id="h6">Behind the scenes</h2>
   <p>In an attempt to keep the plugin as fast as possible, a very basic <code>font-size</code> calculation is ran whenever the <code>window.resize</code> event fires. Headlines that have been preset only fire steps 1, 2, 6 and, if required, 7 &ndash; skipping steps 3 through 5 completely. To save extra cpu cycles, the resize event has been throttled to 300ms.</p>
   <ol>
     <li>The headlines pixel width is calculated.</li>
@@ -227,7 +229,7 @@
     <li>Each individual <code>span</code> then has its <code>font-size</code> adjusted by multiplying the current <code>font-size</code> by the ratio difference between the parent containers width (calculated in step 1) and the width of the <code>span</code>.</li>
     <li>If required, each individual <code>span</code> then has either its <code>letter-spacing</code> (if the line contains only one word) or its <code>word-spacing</code> (if the line contains multiple words) adjusted in an attempt to prod the browser into rectifying over-shoots or under-shoots in line length caused by the previous <code>font-size</code> adjustment.</li>
   </ol>
-  <h2 id="h6">Plugin options</h2>
+  <h2 id="h7">Plugin options</h2>
   <p>The following options can currently be passed to the plugin. The first three listed (<code>fontRatio</code>, <code>forceNewCharCount</code> and <code>wrapAmpersand</code>) are only used whenever the plugin has to dynamically create the word combinations i.e. if <code>&lt;span class="slabtext"&gt;</code> elements are <em>not</em> already present within the markup.</p>
   <dl>
     <dt>fontRatio</dt>
@@ -236,15 +238,23 @@
     <dd>A Boolean value that instructs the script to recalculate the ideal number of &#8220;characters per line&#8221; and reinsert the spans every time the resize event fires (TRUE) or only whenever the parent containers <code>font-size</code> changes (FALSE). Setting this value to FALSE will inevitably save CPU cycles but is only really of use in modern browsers that respond to media queries (or older browsers have been patched to respond to media queries). Defaults to TRUE.</dd> 
     <dt>wrapAmpersand</dt>
     <dd>A Boolean value that instructs the script to wrap ampersands (&amp;) in a <code>&lt;span class="amp"&gt;</code> (TRUE) or not (FALSE). Defaults to TRUE.</dd>
+    <dt>maxFontSize</dt>
+    <dd>An Integer value that indicates the maximum pixel font-size that the script can set. Defaults to 999.</dd>
     <dt>viewportBreakpoint</dt>
     <dd>An Integer value that indicates the minimum pixel width the viewport may have before the slabtext treatment is removed. There is no default value.</dd>
     <dt>headerBreakpoint</dt>
     <dd>An Integer value that indicates the minimum pixel width the header may have before the slabtext treatment is removed. There is no default value.</dd>
     <dt>noResizeEvent</dt>
-    <dd>A Boolean value that instructs the script <em>not</em> to set the <code>window.resize</code> event (TRUE). Useful for those of you using a fixed width layout. Defaults to FALSE.</dd> 
+    <dd>A Boolean value that instructs the script to ignore the <code>window.resize</code> event (TRUE)  or not (FALSE). Useful for those of you using a fixed width layout. Defaults to FALSE.</dd>
+    <dt>resizeThrottleTime</dt>
+    <dd>An Integer value that indicates the number of milliseconds the <code>window.resize</code> will be throttled to. Defaults to 300.</dd>
+    <dt>precision</dt>
+    <dd>An Integer value that indicates the decimal precision to use when setting the CSS values <code>line-height</code>, <code>word-spacing</code> and <code>font-size</code>. Defaults to 3.</dd>
+    <dt>postTweak</dt>
+    <dd>A Boolean value that instructs the script to tweak the lineheight or word spacing after the fontsize calculation has been ran (TRUE) or not (FALSE). Defaults to TRUE.</dd>
   </dl>
   <p>It&#8217;s also worth noting that any non-breaking space character used to prevent widowed words within the original, non-adjusted headline will also be included within the adjusted headline.</p>
-  <h2 id="h7">A note on the CSS</h2>
+  <h2 id="h8">A note on the CSS</h2>
   <p>The plugin requires the following CSS rules are made available:</p>
   <pre><code>.slabtexted .slabtext
         {
@@ -273,7 +283,7 @@
   <p>Unfortunately, one side-effect of using <code>inline-block</code> means that the injected <code>span</code> elements react to surrounding whitespace (which, amongst other things, augments the vertical spacing between rows) &ndash; this is remedied by giving the header a classname of <code>slabtextdone</code> whenever the <code>font-size</code> calculation is complete, which sets a <code>display:block</code> style and avoids the whitespace and styling issues associated with  <code>inline-block</code>.</p>
   <p>Sharp-eyed readers may have noticed that the value of zero is passed to Internet Explorer using the star-hack. This is because IE &lt; 8 doesn&#8217;t understand the <code>inherit</code> property and so we reset to zero as a failsafe.</p>
   <p>The CSS file is miniscule though and you may be better off pasting the contents of the minified version bundled with the download into your main CSS file to avoid an unnecessary HTTP request.</p>        
-  <h2 id="h8">Buyer beware</h2>        
+  <h2 id="h9">Buyer beware</h2>
   <p>Here are a few things to remember when using the plug-in:</p>
   <ol>
     <li>Headlines with lots of horizontal space to fill are more gracefully displayed across browsers.</li>
@@ -281,15 +291,16 @@
     <li>The element to be given the slabText treatment has its (inner)HTML replaced entirely (by using the jQuery <code>.html</code> method), which means that all images and links contained within will disappear without a trace.</li>
     <li>Unlike the original <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a>, vertical space is not taken into consideration at all.</li>
     <li>I&#8217;ve no idea how the script behaves in a right-to-left environment.</li>
-    <li>Internet Explorer 6, due to its non-support of <code>inline-block</code>, cannot scale <em>down</em> the text when the browser viewport is reduced in width. This may not be an issue if you serve a fixed width design to IE6 and fluid width design to other browsers.</li>
-    <li>Internet Explorer 7 does not support the CSS value of <code>inherit</code> which means that the <code>letter-spacing</code> and <code>word-spacing</code> have to get reset to zero whenever the slabText treatment is removed by the script.</li>
-    <li>Always call the script <em>after</em> all <code>fontface</code> fonts have downloaded (if using). I&#8217;ve hacked this for the demo to enable you to see the headline transformation as the script kicks-in but you should always use google WebFont loaders <code>active()</code> and <code>inactive()</code> callbacks to launch the slabText treatment (or a similar "font loaded" callback feature from another font provider).</li>
+    <li>If the header contains multiple links, only the first link located is taken into account.</li>
+    <li>Internet Explorer 6, due to its non-support of <code>inline-block</code>, cannot scale <em>down</em> the text when the browser viewport is reduced in width. This will not be an issue if you serve a fixed width design to IE6 and fluid width design to other browsers.</li>
+    <li>Internet Explorer &lt; 8 does not support the CSS value of <code>inherit</code> which means that the <code>letter-spacing</code> and <code>word-spacing</code> have to get reset to zero whenever the slabText treatment is removed by the script.</li>
+    <li>Always call the script <em>after</em> all <code>fontface</code> fonts have downloaded. I&#8217;ve hacked this for the demo to enable you to see the headline transformation as the script kicks-in but you should always use google WebFont loaders <code>active()</code> and <code>inactive()</code> callbacks to launch the slabText treatment (or a similar "font loaded" callback feature from another font provider).</li>
   </ol>
-  <h2 id="h9">Credit where credit is due</h2>       
+  <h2 id="h10">Credit where credit is due</h2>
   <p>Based on the nice, shiny <a href="http://fittextjs.com/">fittext</a> jQuery plugin by <a href="http://paravelinc.com/">Paravel</a> &amp; the wonderful <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> by Erik Loyer. Zach Leatherman has also written a jQuery plugin named <a href="http://www.zachleat.com/web/bigtext-makes-text-big/">BigText</a> with similar but not exact functionality which is well worth a visit.</p>                      
-  <h2 id="h10">Grab the code</h2>
+  <h2 id="h11">Grab the code</h2>
   <p>The code can be <a href="http://github.com/freqDec/slabText/">downloaded from github</a>. Both minified and unminified versions are included within the bundle. The minified version currently clocks-in at 3k &ndash; this drops to around 2k when gzipped.</p>       
-  <h2 id="h11">A few more examples</h2>
+  <h2 id="h12">A few more examples</h2>
   <p>As way of example, here&#8217;s a random assortment of book titles (Note: I&#8217;ve left widowed words in all of them).</p>
   <!-- Yeah, yeah - multiple h1's etc. It's horrible but not the end of the world. Apologies to those offended. -->
   <h1>The Sisters Brothers</h1>
@@ -311,6 +322,8 @@
   <h1>Mansfield Park</h1>
   <hr />
   <h1>The Importance of being Earnest</h1>
+  <hr />
+  <h1>The Scarlet Letter</h1>
   <hr />
   <h1><a href="http://en.wikipedia.org/wiki/Dracula" title="The Dracula wikipedia page">Dracula</a></h1>
   <footer>

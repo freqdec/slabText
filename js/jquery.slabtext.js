@@ -1,4 +1,4 @@
-/*! jQuery slabtext plugin v2 MIT/GPL2 @freqdec */
+/*! jQuery slabtext plugin v2.1 MIT/GPL2 @freqdec */
 (function( $ ){  
         
     $.fn.slabText = function(options) {
@@ -10,14 +10,21 @@
             // Always recalculate the characters per line, not just when the 
             // font-size changes? Defaults to true (CPU intensive)
             "forceNewCharCount"     : true,
-            // Do we wrap ampersands in <span class="amp"> ?
+            // Do we wrap ampersands in <span class="amp"> 
             "wrapAmpersand"         : true,
             // Under what pixel width do we remove the slabtext styling?
             "headerBreakpoint"      : null,
             "viewportBreakpoint"    : null,
             // Don't attach a resize event
             "noResizeEvent"         : false,
-            "maxFontSize"           : 9999
+            // By many milliseconds do we throttle the resize event
+            "resizeThrottleTime"    : 300,
+            // The maximum pixel font size the script can set
+            "maxFontSize"           : 999,
+            // Do we try to tweak the letter-spacing or word-spacing?
+            "postTweak"             : true,
+            // Decimal precision to use when setting CSS values
+            "precision"             : 3
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -40,10 +47,12 @@
                 forceNewCharCount   = settings.forceNewCharCount,
                 headerBreakpoint    = settings.headerBreakpoint,
                 viewportBreakpoint  = settings.viewportBreakpoint,
+                postTweak           = settings.postTweak,
+                precision           = settings.precision,
+                resizeThrottleTime  = settings.resizeThrottleTime,
                 resizeThrottle      = null,
-                viewportWidth       = $(window).width();                                   
-                // Extract the first href from source text
-                headLink            = $this.find("a:first").attr("href"),
+                viewportWidth       = $(window).width(),
+                headLink            = $this.find("a:first").attr("href") || $this.attr("href"),
                 linkTitle           = headLink ? $this.find("a:first").attr("title") : "";
             
             // Calculates the pixel equivalent of 1em within the current header
@@ -54,8 +63,9 @@
                 return emH;
             };             
                                           
-            // Most of this function is a (very) stripped down AS3 to JS port of the slabtype
-            // algorithm by Eric Loyer with the original comments left intact
+            // Most of this function is a (very) stripped down AS3 to JS port of 
+            // the slabtype algorithm by Eric Loyer with the original comments 
+            // left intact
             // http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/                         
             var resizeSlabs = function resizeSlabs() {
                     
@@ -146,28 +156,34 @@
                 // Loop through the spans changing font-size accordingly
                 $("span.slabtext", $this).each(function() {
                     var $span       = $(this),
+                        // the .text method appears as fast as using custom -data attributes in this case
                         innerText   = $span.text(),
                         wordSpacing = innerText.split(" ").length > 1,
                         diff,
                         ratio,
                         fontSize;
-                        
-                    $span.css('word-spacing', 0).css('letter-spacing', 0);
+                    
+                    if(postTweak) {   
+                        $span.css({
+                            "word-spacing":0, 
+                            "letter-spacing":0
+                            });
+                    };
                     
                     ratio    = parentWidth / $span.width();
                     fontSize = parseFloat(this.style.fontSize) || origFontSize;
                     
                     // Resize font    
-                    $span.css('font-size', Math.min((fontSize * ratio).toFixed(3), settings.maxFontSize) + "px");
+                    $span.css("font-size", Math.min((fontSize * ratio).toFixed(precision), settings.maxFontSize) + "px");
                     
                     // Do we still have space to try to fill or crop
-                    diff = parentWidth - $span.width();
+                    diff = !!postTweak ? parentWidth - $span.width() : false;
                     
                     // A "dumb" tweak in the blind hope that the browser will
                     // resize the text to better fit the available space.
                     // Better "dumb" and fast...
                     if(diff) {
-                        $span.css((wordSpacing ? 'word' : 'letter') + '-spacing', (diff / (wordSpacing ? innerText.split(" ").length - 1 : innerText.length)).toFixed(3) + "px");
+                        $span.css((wordSpacing ? 'word' : 'letter') + '-spacing', (diff / (wordSpacing ? innerText.split(" ").length - 1 : innerText.length)).toFixed(precision) + "px");
                     };                                                                                                                        
                 });
                     
@@ -195,7 +211,7 @@
                                     
                     // Throttle the resize event to 300ms
                     clearTimeout(resizeThrottle);
-                    resizeThrottle = setTimeout(resizeSlabs, 300);
+                    resizeThrottle = setTimeout(resizeSlabs, resizeThrottleTime);
                 });
             };        
         });
