@@ -138,7 +138,7 @@
                                 finalText = postText;
                             };
 
-                            lineText.push('<span class="slabtext">' + $.trim(settings.wrapAmpersand ? finalText.replace("&", '<span class="amp">&amp;</span>') : finalText) + "</span>");
+                            lineText.push('<span class="slabtext">' + $.trim(settings.wrapAmpersand ? finalText.replace(/&/g, '<span class="amp">&amp;</span>') : finalText) + "</span>");
                         };
                                     
                         $this.html(lineText.join(" "));
