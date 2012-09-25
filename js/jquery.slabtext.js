@@ -138,7 +138,17 @@
                                 finalText = postText;
                             };
 
-                            lineText.push('<span class="slabtext">' + $.trim(settings.wrapAmpersand ? finalText.replace(/&/g, '<span class="amp">&amp;</span>') : finalText) + "</span>");
+                            // HTML-escape the text
+                            finalText = $('<div/>').text(finalText).html()
+
+                            // Wrap ampersands in spans with class `amp` for specific styling
+                            if(settings.wrapAmpersand) {
+                                finalText = finalText.replace(/&amp;/g, '<span class="amp">&amp;</span>');
+                            }
+
+                            finalText = $.trim(finalText)
+
+                            lineText.push('<span class="slabtext">' + finalText + "</span>");
                         };
                                     
                         $this.html(lineText.join(" "));
