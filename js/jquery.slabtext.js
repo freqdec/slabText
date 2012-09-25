@@ -38,12 +38,12 @@
                     $.extend(settings, options);
             };
             
-            var $this               = $(this),                              
+            var $this               = $(this),
                 keepSpans           = $("span.slabtext", $this).length,
-                words               = keepSpans ? [] : String($.trim($this.text())).replace(/\s{2,}/g, " ").split(" "),                              
-                origFontSize        = null,                                 
-                idealCharPerLine    = null,                                 
-                fontRatio           = settings.fontRatio,                   
+                words               = keepSpans ? [] : String($.trim($this.text())).replace(/\s{2,}/g, " ").split(" "),
+                origFontSize        = null,
+                idealCharPerLine    = null,
+                fontRatio           = settings.fontRatio,
                 forceNewCharCount   = settings.forceNewCharCount,
                 headerBreakpoint    = settings.headerBreakpoint,
                 viewportBreakpoint  = settings.viewportBreakpoint,
@@ -132,7 +132,7 @@
                             // use that one for the line
                             if((preDiff < postDiff) && (preText.length > 2)) {
                                 finalText = preText;
-                                wordIndex--;              
+                                wordIndex--;
                             // otherwise, use the longer string for the line
                             } else {
                                 finalText = postText;
