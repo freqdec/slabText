@@ -1,4 +1,4 @@
-/*! jQuery slabtext plugin v2.1 MIT/GPL2 @freqdec */
+/*! jQuery slabtext plugin v2.2 MIT/GPL2 @freqdec */
 (function( $ ){  
         
     $.fn.slabText = function(options) {
@@ -24,7 +24,9 @@
             // Do we try to tweak the letter-spacing or word-spacing?
             "postTweak"             : true,
             // Decimal precision to use when setting CSS values
-            "precision"             : 3
+            "precision"             : 3,
+            // The min num of chars a line has to contain
+            "minCharsPerLine"       : 0
             };
         
         // Add the slabtexted classname to the body to initiate the styling of
@@ -33,8 +35,7 @@
             
         return this.each(function(){
                
-            // Extend options if necessary
-            if(options) { 
+            if(options) {
                     $.extend(settings, options);
             };
             
@@ -50,10 +51,15 @@
                 postTweak           = settings.postTweak,
                 precision           = settings.precision,
                 resizeThrottleTime  = settings.resizeThrottleTime,
+                minCharsPerLine     = settings.minCharsPerLine,
                 resizeThrottle      = null,
                 viewportWidth       = $(window).width(),
                 headLink            = $this.find("a:first").attr("href") || $this.attr("href"),
                 linkTitle           = headLink ? $this.find("a:first").attr("title") : "";
+            
+            if(!keepSpans && minCharsPerLine && words.join(" ").length < minCharsPerLine) {
+                return;
+            };
             
             // Calculates the pixel equivalent of 1em within the current header
             var grabPixelFontSize = function() {
@@ -80,7 +86,7 @@
                    ||
                    headerBreakpoint && headerBreakpoint > parentWidth) {
                     // Add the slabtextinactive classname to set the spans as inline
-                    // and to reset the font-size to 1em (inherit won't work in IE7)
+                    // and to reset the font-size to 1em (inherit won't work in IE6/7)
                     $this.addClass("slabtextinactive");                                        
                     return;
                 };
@@ -100,6 +106,7 @@
                         preText             = "",
                         postText            = "",
                         finalText           = "",
+                        slice,
                         preDiff,
                         postDiff;
                     
@@ -122,15 +129,26 @@
                                 };
                             };
 
+                            // This bit hacks in a minimum characters per line test
+                            // on the last line
+                            if(minCharsPerLine) {
+                                slice = words.slice(wordIndex).join(" ");
+                                if(slice.length < minCharsPerLine) {
+                                    postText += slice;
+                                    preText = postText;
+                                    wordIndex = words.length + 2;
+                                };
+                            };
+
                             // calculate the character difference between the two strings and the
                             // ideal number of characters per line
                             preDiff  = idealCharPerLine - preText.length;
                             postDiff = postText.length - idealCharPerLine;
             
                             // if the smaller string is closer to the length of the ideal than
-                            // the longer string, and doesn’t contain just a single character, then
-                            // use that one for the line
-                            if((preDiff < postDiff) && (preText.length > 2)) {
+                            // the longer string, and doesn’t contain less than minCharsPerLine
+                            // characters, then use that one for the line
+                            if((preDiff < postDiff) && (preText.length >= (minCharsPerLine || 2))) {
                                 finalText = preText;
                                 wordIndex--;
                             // otherwise, use the longer string for the line
@@ -144,7 +162,7 @@
                             // Wrap ampersands in spans with class `amp` for specific styling
                             if(settings.wrapAmpersand) {
                                 finalText = finalText.replace(/&amp;/g, '<span class="amp">&amp;</span>');
-                            }
+                            };
 
                             finalText = $.trim(finalText)
 
@@ -153,7 +171,7 @@
                                     
                         $this.html(lineText.join(" "));
                         // If we have a headLink, add it back just inside our target, around all the slabText spans
-                        if (headLink) {
+                        if(headLink) {
                             $this.wrapInner('<a href="' + headLink + '" ' + (linkTitle ? 'title="' + linkTitle + '" ' : '') + '/>');
                         };
                     };        
@@ -163,7 +181,6 @@
                     origFontSize = fs;
                 };
                                                         
-                // Loop through the spans changing font-size accordingly
                 $("span.slabtext", $this).each(function() {
                     var $span       = $(this),
                         // the .text method appears as fast as using custom -data attributes in this case
@@ -183,7 +200,6 @@
                     ratio    = parentWidth / $span.width();
                     fontSize = parseFloat(this.style.fontSize) || origFontSize;
                     
-                    // Resize font    
                     $span.css("font-size", Math.min((fontSize * ratio).toFixed(precision), settings.maxFontSize) + "px");
                     
                     // Do we still have space to try to fill or crop
@@ -206,20 +222,15 @@
             resizeSlabs();     
                     
             if(!settings.noResizeEvent) {
-                // Window resize event          
                 $(window).resize(function() {
                     // Only run the resize code if the viewport width has changed.
-                    // we ignore the viewport height as it will be constantly changing 
-                    // due to the font-size resizing and IE fires a resize event whenever
-                    // vertical height has changed leading to an endless loop and
-                    // locked browser.
+                    // we ignore the viewport height as it will be constantly changing.
                     if($(window).width() == viewportWidth) {
                         return;
                     };
                                     
                     viewportWidth = $(window).width();
                                     
-                    // Throttle the resize event to 300ms
                     clearTimeout(resizeThrottle);
                     resizeThrottle = setTimeout(resizeSlabs, resizeThrottleTime);
                 });

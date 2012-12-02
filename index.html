@@ -70,6 +70,10 @@
             {
             text-decoration:none;
             }
+        h1 a:hover
+            {
+            color:#a82222;
+            }
         p
             {
             margin:0 0 1.5em 0;
@@ -252,6 +256,8 @@
     <dd>An Integer value that indicates the decimal precision to use when setting the CSS values <code>line-height</code>, <code>word-spacing</code> and <code>font-size</code>. Defaults to 3.</dd>
     <dt>postTweak</dt>
     <dd>A Boolean value that instructs the script to tweak the lineheight or word spacing after the fontsize calculation has been ran (TRUE) or not (FALSE). Defaults to TRUE.</dd>
+    <dt>minCharsPerLine</dt>
+    <dd>An optional Integer value that indicates the minimum number of characters to set per line. Headlines that have a character count smaller than this value are not given the slabText treatment.</dd>
   </dl>
   <p>It&#8217;s also worth noting that any non-breaking space character used to prevent widowed words within the original, non-adjusted headline will also be included within the adjusted headline.</p>
   <h2 id="h8">A note on the CSS</h2>
@@ -292,7 +298,7 @@
     <li>Unlike the original <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a>, vertical space is not taken into consideration at all.</li>
     <li>I&#8217;ve no idea how the script behaves in a right-to-left environment.</li>
     <li>If the header contains multiple links, only the first link located is taken into account.</li>
-    <li>Internet Explorer 6, due to its non-support of <code>inline-block</code>, cannot scale <em>down</em> the text when the browser viewport is reduced in width. This will not be an issue if you serve a fixed width design to IE6 and fluid width design to other browsers.</li>
+    <li>Internet Explorer 6, due to its non-support of <code>inline-block</code>, cannot scale <em>down</em> the text when the browser viewport is reduced in width. This will not be an issue if you serve a fixed width design to IE6 and fluid width design to other, more capable browsers.</li>
     <li>Internet Explorer &lt; 8 does not support the CSS value of <code>inherit</code> which means that the <code>letter-spacing</code> and <code>word-spacing</code> have to get reset to zero whenever the slabText treatment is removed by the script.</li>
     <li>Always call the script <em>after</em> all <code>fontface</code> fonts have downloaded. I&#8217;ve hacked this for the demo to enable you to see the headline transformation as the script kicks-in but you should always use google WebFont loaders <code>active()</code> and <code>inactive()</code> callbacks to launch the slabText treatment (or a similar "font loaded" callback feature from another font provider).</li>
   </ol>
@@ -343,19 +349,23 @@ $("#myHeader").html(stS + txt.join(stE + stS) + stE).slabText();</code></pre>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
   <script src="./js/jquery.slabtext.min.js"></script>
   <script>
-        // Function to slabtext the H1 headings
-        function slabTextHeadlines() {
-                $("h1").slabText({
-                        // Don't slabtext the headers if the viewport is under 380px
-                        "viewportBreakpoint":380
-                });
-        };
-        
-        // Called one second after the onload event for the demo (as I'm hacking the fontface load event a bit here)
-        // you should really use google WebFont loader events (or something similar) for better control
-        $(window).load(function() {
-                setTimeout(slabTextHeadlines, 1000);
+    // Function to slabtext the H1 headings
+    function slabTextHeadlines() {
+        $("h1").slabText({
+            // Don't slabtext the headers if the viewport is under 380px
+            "viewportBreakpoint":380
         });
+    };
+    
+    // Called one second after the onload event for the demo (as I'm hacking the
+    // fontface load event a bit here)
+
+    // Please do not do this in a production environment - you should really use
+    // google WebFont loader events (or something similar) for better control
+    $(window).load(function() {
+        // So, to recap... don't actually do this, it's nasty!
+        setTimeout(slabTextHeadlines, 1000);
+    });
   </script>   
 </body>
 </html>
