@@ -78,6 +78,11 @@
                 // Cache the parent containers width       
                 var parentWidth = $this.width(),
                     fs;
+                    
+                //Sanity check to prevent infinite loop
+                if ( parentWidth === 0 ) {
+                    return;
+                }
                 
                 // Remove the slabtextdone and slabtextinactive classnames to enable the inline-block shrink-wrap effect
                 $this.removeClass("slabtextdone slabtextinactive");
