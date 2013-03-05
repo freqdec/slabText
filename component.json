@@ -1,0 +1,8 @@
+{
+  "name": "slabText", 
+  "version": "2.2.0", 
+  "main": ["./js/jquery.slabtext.js", "./css/slabtext.css"],
+  "dependencies": {
+    "jquery": ">=1.4.2"
+  }
+}
