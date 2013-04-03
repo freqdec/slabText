@@ -1,4 +1,4 @@
-/*! jQuery slabtext plugin v2.2 MIT/GPL2 @freqdec */
+/*! jQuery slabtext plugin v2.3 MIT/GPL2 @freqdec */
 (function( $ ){
 
     $.fn.slabText = function(options) {
