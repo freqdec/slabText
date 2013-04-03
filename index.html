@@ -9,7 +9,7 @@
     <style>
         /* Note: I've not added the fontface files to the git repo */
         @font-face 
-            {                            
+            {
             font-family: 'LeagueGothicRegular';
             src: url('League_Gothic-webfont.eot');
             src: url('League_Gothic-webfont.eot?#iefix') format('embedded-opentype'),
@@ -18,7 +18,7 @@
             url('League_Gothic-webfont.svg#LeagueGothicRegular') format('svg');
             font-weight: normal;
             font-style: normal;
-            }                                
+            }
         html,
         body
             {
@@ -27,21 +27,21 @@
             }
         body
             {
-            font: 16px/1.8 "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font:16px/1.8 "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
             width:80%;
             padding:20px 0;
             max-width:960px;
             margin:0 auto;
-            }            
+            }
         /* http://css-tricks.com/simple-styles-for-horizontal-rules/ */
         hr 
             {
-            border: 0;
-            height: 1px;
-            background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-            background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-            background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
-            background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0)); 
+            border:0;
+            height:1px;
+            background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+            background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+            background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+            background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
             }
         .col-1
             {
@@ -54,17 +54,17 @@
             width:47.5%;
             margin:0 0 0 2.5%;
             float:left;
-            } 
+            }
         .col-1 p,
         .col-2 p
             {
             color:#888;
             font-size:80%;
             text-align:center;
-            }       
+            }
         a
             {
-            color:#111;             
+            color:#111;
             }
         h1 a
             {
@@ -117,9 +117,9 @@
             {
             text-align:left;
             font-family:'LeagueGothicRegular', "Impact", Charcoal, Arial Black, Gadget, Sans serif;
-            text-transform: uppercase;           
-            line-height:1;   
-            color:#222;             
+            text-transform: uppercase;
+            line-height:1;
+            color:#222;
             font-size:300%;
             /* Remember to set the correct font weight if using fontface */
             font-weight:normal;
@@ -154,7 +154,7 @@
             {
                 body
                     {
-                    padding:10px 0;                                
+                    padding:10px 0;
                     min-width:20em;
                     }
                 .col-1,
@@ -172,8 +172,8 @@
                     {
                     font-size:22px;
                     }
-            }        
-        @media screen and (max-width: 460px) 
+            }
+        @media screen and (max-width: 460px)
             {
                 h1
                     {
@@ -199,7 +199,7 @@
     <![endif]-->
 </head>
 <body>
-  <h1 id="h1">slabText &ndash; a jQuery plugin for producing big, bold &amp; responsive headlines</h1>                
+  <h1 id="h1">slabText &ndash; a jQuery plugin for producing big, bold &amp; responsive headlines</h1>
   <p>I&#8217;ve been wanting to attempt a port of Erik Loyer&#8217;s <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> for quite some time now and seeing Paravel&#8217;s <a href="http://fittextjs.com/">fittext</a> jQuery plugin, in combination with a gloriously hassle-free lunch hour gave me the impetus to attempt it. This is the result &ndash; resize the browser viewport to see the effect in action.</p>        
   <h2 id="h2">So what does the script do again?</h2>
   <p>Put simply, the script splits headlines into rows before resizing each row to fill the available horizontal space. The ideal number of characters to set on each row is calculated by dividing the available width by the pixel font-size &ndash; the script then uses this <em>ideal character count</em> to split the headline into word combinations that are displayed as separate rows of text. Many, many <a href="#h12">more examples</a> can be viewed further down the page.</p>
@@ -210,15 +210,15 @@
   <p>Presetting the headline does have its drawbacks though &ndash; at smaller sizes and if the rows have wildly varying letter-counts, jagged right edges may be displayed. The script will adjust the <code>word-spacing</code> or <code>letter-spacing</code> in an attempt to rectify over-shoots or under-shoots in line length like this.</p>
   <p>The following demo showcases two versions of the same headline, the first has rows (word combinations) dynamically calculated by the script while the second has rows preset within the markup (and therefore only resized-to-fit by the script).</p>
   <div class="col-1">
-    <p>The following word combinations are calculated by the script</p>                
+    <p>The following word combinations are calculated by the script</p>
     <h1>For one night only Jackie Mittoo with special Studio One guests Dillinger <span class="amp">&amp;</span> Lone&nbsp;Ranger</h1>
   </div>
   <div class="col-2">
     <p>The following word combinations are preset within the markup</p>
-    <h1 id="studio-one"><span class="slabtext">For one night only</span> <span class="slabtext">Jackie Mittoo</span> <span class="slabtext">with special Studio One guests</span> <span class="slabtext">Dillinger <span class="amp">&amp;</span> Lone Ranger</span></h1>                
+    <h1 id="studio-one"><span class="slabtext">For one night only</span> <span class="slabtext">Jackie Mittoo</span> <span class="slabtext">with special Studio One guests</span> <span class="slabtext">Dillinger <span class="amp">&amp;</span> Lone Ranger</span></h1>
   </div>
   <h2 id="h4">Headers containing links</h2>
-  <p>If the original header contains a link (or should itself have an href set), the generated spans will be wrapped in a link that uses the same href.</p>
+  <p>If the original header element contains a link (or should itself have an href set), the generated spans will be wrapped in a link that uses the same href value. This can be seen in action in the last demo below &#8220;<a href="#dracula">Dracula</a>&#8221;.</p>
   <h2 id="h5">Being responsibly responsive</h2>
   <p>You may wish to remove the slabtext treatment entirely should either the viewport or the header element resize to below a certain, predefined width; for example, if the viewport width drops to below 380 pixels. This can be achievied by using the <code>viewportBreakpoint</code> and <code>headerBreakpoint</code> plugin options, <a href="#h6">detailed below</a>.</p>
   <p>This demo page has set <code>viewportBreakpoint</code> to be 380 pixels. Resizing the browser window to anything below this should remove the slabtext treatment from the headlines altogether.</p>
@@ -226,7 +226,7 @@
   <p>In an attempt to keep the plugin as fast as possible, a very basic <code>font-size</code> calculation is ran whenever the <code>window.resize</code> event fires. Headlines that have been preset only fire steps 1, 2, 6 and, if required, 7 &ndash; skipping steps 3 through 5 completely. To save extra cpu cycles, the resize event has been throttled to 300ms.</p>
   <ol>
     <li>The headlines pixel width is calculated.</li>
-    <li>The headlines pixel <code>font-size</code> is then calculated.</li>                                                                                                                                                                                                          
+    <li>The headlines pixel <code>font-size</code> is then calculated.</li>
     <li>The ideal number of &#8220;characters per line&#8221; is derived by dividing the width (calculated in step 1) by the <code>font-size</code> (calculated in step 2) which itself is multiplied by the font scale ratio (which defaults to 0.78) e.g. for a parent container width of 800 pixels and a font-size of 45 pixels the ideal number of characters per line would be calculated using <code>Math.floor(800 / (45 &times; 0.78)) = 22</code>.</li>
     <li>The headline text is then split into words (by splitting on the space character) and these words arranged into combinations containing &lt;= the number of ideal characters per line (calculated in step 3).</li>
     <li>Each word combination is then wrapped in a <code>&lt;span class="slabtext"&gt;</code> element and the headline markup updated with the new content.</li>
@@ -239,7 +239,7 @@
     <dt>fontRatio</dt>
     <dd>A floating point value that is used when calculating the ideal number of &#8220;characters per line&#8221;. Defaults to 0.78.</dd>
     <dt>forceNewCharCount</dt>
-    <dd>A Boolean value that instructs the script to recalculate the ideal number of &#8220;characters per line&#8221; and reinsert the spans every time the resize event fires (TRUE) or only whenever the parent containers <code>font-size</code> changes (FALSE). Setting this value to FALSE will inevitably save CPU cycles but is only really of use in modern browsers that respond to media queries (or older browsers have been patched to respond to media queries). Defaults to TRUE.</dd> 
+    <dd>A Boolean value that instructs the script to recalculate the ideal number of &#8220;characters per line&#8221; and reinsert the spans every time the resize event fires (TRUE) or only whenever the parent containers <code>font-size</code> changes (FALSE). Setting this value to FALSE will inevitably save CPU cycles but is only really of use in modern browsers that respond to media queries (or older browsers have been patched to respond to media queries). Defaults to TRUE.</dd>
     <dt>wrapAmpersand</dt>
     <dd>A Boolean value that instructs the script to wrap ampersands (&amp;) in a <code>&lt;span class="amp"&gt;</code> (TRUE) or not (FALSE). Defaults to TRUE.</dd>
     <dt>maxFontSize</dt>
@@ -282,13 +282,13 @@
         {
         display:block;
         }
-</code></pre>        
+</code></pre>
   <p>The <code>span</code> elements added to the headline are given the class <code>slabtext</code> and the document <code>body</code> given the class <code>slabtexted</code>.</p>  
   <p>Using a double-whammy className inheritance trick like this means that you can safely add the <code>&lt;span class="slabtext"></code> elements into the markup but they won&#8217;t actually get styled until the script gets called and the <code>slabtexted</code> classname added to the <code>body</code>.</p>
   <p>The <code>span</code> elements are set as <code>display:inline-block</code> during the font-size calculation. This is to take advantage of the <code>inline-block</code> shrink-wrap effect that enables the script to determine the width of each row.</p>
   <p>Unfortunately, one side-effect of using <code>inline-block</code> means that the injected <code>span</code> elements react to surrounding whitespace (which, amongst other things, augments the vertical spacing between rows) &ndash; this is remedied by giving the header a classname of <code>slabtextdone</code> whenever the <code>font-size</code> calculation is complete, which sets a <code>display:block</code> style and avoids the whitespace and styling issues associated with  <code>inline-block</code>.</p>
   <p>Sharp-eyed readers may have noticed that the value of zero is passed to Internet Explorer using the star-hack. This is because IE &lt; 8 doesn&#8217;t understand the <code>inherit</code> property and so we reset to zero as a failsafe.</p>
-  <p>The CSS file is miniscule though and you may be better off pasting the contents of the minified version bundled with the download into your main CSS file to avoid an unnecessary HTTP request.</p>        
+  <p>The CSS file is miniscule though and you may be better off pasting the contents of the minified version bundled with the download into your main CSS file to avoid an unnecessary HTTP request.</p>
   <h2 id="h9">Buyer beware</h2>
   <p>Here are a few things to remember when using the plug-in:</p>
   <ol>
@@ -305,7 +305,7 @@
   <h2 id="h10">Credit where credit is due</h2>
   <p>Based on the nice, shiny <a href="http://fittextjs.com/">fittext</a> jQuery plugin by <a href="http://paravelinc.com/">Paravel</a> &amp; the wonderful <a href="http://erikloyer.com/index.php/blog/the_slabtype_algorithm_part_1_background/">slabtype algorithm</a> by Erik Loyer. Zach Leatherman has also written a jQuery plugin named <a href="http://www.zachleat.com/web/bigtext-makes-text-big/">BigText</a> with similar but not exact functionality which is well worth a visit.</p>                      
   <h2 id="h11">Grab the code</h2>
-  <p>The code can be <a href="http://github.com/freqDec/slabText/">downloaded from github</a>. Both minified and unminified versions are included within the bundle. The minified version currently clocks-in at 3k &ndash; this drops to around 2k when gzipped.</p>       
+  <p>The code can be <a href="http://github.com/freqDec/slabText/">downloaded from github</a>. Both minified and unminified versions are included within the bundle. The minified version currently clocks-in at 3k &ndash; this drops to around 2k when gzipped.</p>
   <h2 id="h12">A few more examples</h2>
   <p>As way of example, here&#8217;s a random assortment of book titles (Note: I&#8217;ve left widowed words in all of them).</p>
   <!-- Yeah, yeah - multiple h1's etc. It's horrible but not the end of the world. Apologies to those offended. -->
@@ -331,7 +331,7 @@
   <hr />
   <h1>The Scarlet Letter</h1>
   <hr />
-  <h1><a href="http://en.wikipedia.org/wiki/Dracula" title="The Dracula wikipedia page">Dracula</a></h1>
+  <h1 id="dracula"><a href="http://en.wikipedia.org/wiki/Dracula" title="The Dracula wikipedia page">Dracula</a></h1>
   <footer>
     <section>
       <p id="fn1"><a href="#r1">(1)</a> Of course, you can always use Javascript to inject the <code>&lt;span class="slabtext"&gt;</code> elements into the headline before calling the plugin &ndash; which would keep the markup squeaky clean and cruft free. Here&#8217;s a quick example of how it might be done:</p>
