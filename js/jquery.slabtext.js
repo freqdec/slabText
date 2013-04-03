@@ -79,6 +79,11 @@
                 var parentWidth = $this.width(),
                     fs;
 
+               //Sanity check to prevent infinite loop
+                if(parentWidth === 0) {
+                    return;
+                };
+
                 // Remove the slabtextdone and slabtextinactive classnames to enable the inline-block shrink-wrap effect
                 $this.removeClass("slabtextdone slabtextinactive");
 
@@ -91,7 +96,7 @@
                     return;
                 };
 
-                fs = grabPixelFontSize(); 
+                fs = grabPixelFontSize();
                 // If the parent containers font-size has changed or the "forceNewCharCount" option is true (the default),
                 // then recalculate the "characters per line" count and re-render the inner spans
                 // Setting "forceNewCharCount" to false will save CPU cycles...
@@ -114,7 +119,7 @@
                         idealCharPerLine = newCharPerLine;
 
                         while (wordIndex < words.length) {
-                       
+
                             postText = "";
 
                             // build two strings (preText and postText) word by word, with one
@@ -144,7 +149,7 @@
                             // ideal number of characters per line
                             preDiff  = idealCharPerLine - preText.length;
                             postDiff = postText.length - idealCharPerLine;
-            
+
                             // if the smaller string is closer to the length of the ideal than
                             // the longer string, and doesn’t contain less than minCharsPerLine
                             // characters, then use that one for the line
@@ -210,7 +215,7 @@
                     // Better "dumb" and fast...
                     if(diff) {
                         $span.css((wordSpacing ? 'word' : 'letter') + '-spacing', (diff / (wordSpacing ? innerText.split(" ").length - 1 : innerText.length)).toFixed(precision) + "px");
-                    };                                                                                                                        
+                    };
                 });
 
                 // Add the class slabtextdone to set a display:block on the child spans
