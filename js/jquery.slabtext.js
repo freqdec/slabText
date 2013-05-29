@@ -224,7 +224,9 @@
             };
 
             // Immediate resize
-            resizeSlabs();
+            $(window).bind("load", function() {
+                resizeSlabs();
+            });
 
             if(!settings.noResizeEvent) {
                 $(window).resize(function() {
