@@ -115,7 +115,7 @@
                         preDiff,
                         postDiff;
 
-                    if(newCharPerLine != idealCharPerLine) {
+                    if(newCharPerLine != 0 && newCharPerLine != idealCharPerLine) {
                         idealCharPerLine = newCharPerLine;
 
                         while (wordIndex < words.length) {
