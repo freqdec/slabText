@@ -284,26 +284,25 @@
         <h2 id="h8">A note on the CSS</h2>
         <p>The plugin requires the following CSS rules are made available:</p>
         <pre><code>.slabtexted .slabtext
-            {
-            display:-moz-inline-box;
-            display:inline-block;
-            white-space:nowrap;
-            }
-        .slabtextinactive .slabtext
-            {
-            display:inline;
-            white-space:normal;
-            font-size:1em !important;
-            letter-spacing:inherit !important;
-            word-spacing:inherit !important;
-            *letter-spacing:0 !important;
-            *word-spacing:0 !important;
-            }
-        .slabtextdone .slabtext
-            {
-            display:block;
-            }
-        </code></pre>
+    {
+    display:-moz-inline-box;
+    display:inline-block;
+    white-space:nowrap;
+    }
+.slabtextinactive .slabtext
+    {
+    display:inline;
+    white-space:normal;
+    font-size:1em !important;
+    letter-spacing:inherit !important;
+    word-spacing:inherit !important;
+    *letter-spacing:0 !important;
+    *word-spacing:0 !important;
+    }
+.slabtextdone .slabtext
+    {
+    display:block;
+    }</code></pre>
         <p>The <code>span</code> elements added to the headline are given the class <code>slabtext</code> and the document <code>body</code> given the class <code>slabtexted</code>.</p>
         <p>Using a double-whammy className inheritance trick like this means that you can safely add the <code>&lt;span class="slabtext"></code> elements into the markup but they won&#8217;t actually get styled until the script gets called and the <code>slabtexted</code> classname added to the <code>body</code>.</p>
         <p>The <code>span</code> elements are set as <code>display:inline-block</code> during the font-size calculation. This is to take advantage of the <code>inline-block</code> shrink-wrap effect that enables the script to determine the width of each row.</p>
