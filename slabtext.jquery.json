@@ -5,10 +5,10 @@
     "keywords": [
         "typography"
     ],
-    "version": "2.2.0",
+    "version": "2.4.0",
     "author": {
         "name": "Brian McAllister",
-        "url": "http://www.frequency-decoder.com/"
+        "url": "https://twitter.com/freqdec"
     },
     "licenses": [
         {
@@ -17,8 +17,8 @@
         }
     ],
     "bugs": "https://github.com/freqdec/slabText/issues",
-    "homepage": "http://www.frequency-decoder.com/demo/slabText/",
-    "docs": "http://www.frequency-decoder.com/demo/slabText/",
+    "homepage": "http://freqdec.github.io/slabText/",
+    "docs": "http://freqdec.github.io/slabText/",
     "download": "https://github.com/freqdec/slabText",
     "dependencies": {
         "jquery": ">=1.4.2"
