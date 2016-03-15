@@ -72,15 +72,6 @@
             margin:0 0 1.6em 0;
             line-height:1.6;
             }
-        dt
-            {
-            font-family:monospace;
-            color: #222;
-            }
-        pre
-            {
-            line-height:1.2;
-            }
         footer
             {
             border-top:3px double #aaa;
@@ -92,6 +83,42 @@
         sup a
             {
             text-decoration:none;
+            }
+        pre
+            {
+            /*line-height:1.2;*/
+            padding:1em;
+            background: #33343f;
+
+            }
+        code,
+        dt
+            {
+            font-family: Consolas, Monaco, "Andale Mono", "DejaVu Sans Mono", monospace;
+            color:#222;
+            }
+        pre code
+            {
+            display:block;
+            padding:1em;
+            font-size: 95%;
+            line-height: 140%;
+            white-space: pre;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -o-pre-wrap;
+            background: #23241f;
+            overflow-y: auto;
+            overflow-x: hidden;
+            color: #f8f8f2;
+            }
+        .hl-1
+            {
+            color: #f92672;
+            }
+        .hl-2
+            {
+            color: #e6db74;
             }
         .u--clear-float
             {
@@ -259,11 +286,11 @@
             <dt>fontRatio</dt>
             <dd>A floating point value that is used when calculating the ideal number of &#8220;characters per line&#8221;. Defaults to 0.78.</dd>
             <dt>forceNewCharCount</dt>
-            <dd>A Boolean value that instructs the script to recalculate the ideal number of &#8220;characters per line&#8221; and reinsert the spans every time the resize event fires (TRUE) or only whenever the parent containers <code>font-size</code> changes (FALSE). Setting this value to FALSE will inevitably save CPU cycles but is only really of use in modern browsers that respond to media queries (or older browsers have been patched to respond to media queries). Defaults to TRUE.</dd>
+            <dd>A Boolean value that instructs the script to recalculate the ideal number of &#8220;characters per line&#8221; and reinsert the spans every time the resize event fires (TRUE) or only whenever the parent containers <code>font-size</code> changes (FALSE). Setting this value to FALSE will inevitably save CPU cycles but is only really of use in modern browsers that respond to media queries. Defaults to TRUE.</dd>
             <dt>wrapAmpersand</dt>
             <dd>A Boolean value that instructs the script to wrap ampersands (&amp;) in a <code>&lt;span class="amp"&gt;</code> (TRUE) or not (FALSE). Defaults to TRUE.</dd>
             <dt>maxFontSize</dt>
-            <dd>An Integer value that indicates the maximum pixel font-size that the script can set. Defaults to 999.</dd>
+            <dd>An Integer value that indicates the maximum pixel <code>font-size</code> that the script can set. Defaults to 999.</dd>
             <dt>viewportBreakpoint</dt>
             <dd>An Integer value that indicates the minimum pixel width the viewport may have before the slabtext treatment is removed. There is no default value.</dd>
             <dt>headerBreakpoint</dt>
@@ -275,7 +302,7 @@
             <dt>precision</dt>
             <dd>An Integer value that indicates the decimal precision to use when setting the CSS values <code>line-height</code>, <code>word-spacing</code> and <code>font-size</code>. Defaults to 3.</dd>
             <dt>postTweak</dt>
-            <dd>A Boolean value that instructs the script to tweak the lineheight or word spacing after the fontsize calculation has been ran (TRUE) or not (FALSE). Defaults to TRUE.</dd>
+            <dd>A Boolean value that instructs the script to tweak the <code>line-height</code> or <code>word-spacing</code> after the <code>font-size</code> calculation has been ran (TRUE) or not (FALSE). Defaults to TRUE.</dd>
             <dt>minCharsPerLine</dt>
             <dd>An optional Integer value that indicates the minimum number of characters to set per line. Headlines that have a character count smaller than this value are not given the slabText treatment.</dd>
             <dt>onRender</dt>
@@ -283,32 +310,32 @@
         </dl>
         <h2 id="h8">A note on the CSS</h2>
         <p>The plugin requires the following CSS rules are made available:</p>
-        <pre><code>.slabtexted .slabtext
+        <pre><code><span class="hl-2">.slabtexted .slabtext</span>
     {
-    display:-moz-inline-box;
-    display:inline-block;
-    white-space:nowrap;
+    <span class="hl-1">display</span>: -moz-inline-box;
+    <span class="hl-1">display</span>: inline-block;
+    <span class="hl-1">white-space</span>: nowrap;
     }
-.slabtextinactive .slabtext
+<span class="hl-2">.slabtextinactive .slabtext</span>
     {
-    display:inline;
-    white-space:normal;
-    font-size:1em !important;
-    letter-spacing:inherit !important;
-    word-spacing:inherit !important;
-    *letter-spacing:0 !important;
-    *word-spacing:0 !important;
+    <span class="hl-1">display</span>: inline;
+    <span class="hl-1">white-space</span>: normal;
+    <span class="hl-1">font-size</span>: 1em !important;
+    <span class="hl-1">letter-spacing</span>: inherit !important;
+    <span class="hl-1">word-spacing</span>: inherit !important;
+    *<span class="hl-1">letter-spacing</span>: normal !important;
+    *<span class="hl-1">word-spacing</span>: normal !important;
     }
-.slabtextdone .slabtext
+<span class="hl-2">.slabtextdone .slabtext</span>
     {
-    display:block;
+    <span class="hl-1">display</span>: block;
     }</code></pre>
         <p>The <code>span</code> elements added to the headline are given the class <code>slabtext</code> and the document <code>body</code> given the class <code>slabtexted</code>.</p>
         <p>Using a double-whammy className inheritance trick like this means that you can safely add the <code>&lt;span class="slabtext"></code> elements into the markup but they won&#8217;t actually get styled until the script gets called and the <code>slabtexted</code> classname added to the <code>body</code>.</p>
         <p>The <code>span</code> elements are set as <code>display:inline-block</code> during the font-size calculation. This is to take advantage of the <code>inline-block</code> shrink-wrap effect that enables the script to determine the width of each row.</p>
         <p>Unfortunately, one side-effect of using <code>inline-block</code> means that the injected <code>span</code> elements react to surrounding whitespace (which, amongst other things, augments the vertical spacing between rows) &ndash; this is remedied by giving the header a classname of <code>slabtextdone</code> whenever the <code>font-size</code> calculation is complete, which sets a <code>display:block</code> style and avoids the whitespace and styling issues associated with  <code>inline-block</code>.</p>
         <h3 id="h8-1">Legacy Internet Explorer</h3>
-        <p>Sharp-eyed readers may have noticed that the value of zero is passed to legacy Internet Explorer versions using the star-hack. This is because IE &lt; 8 doesn&#8217;t understand the <code>inherit</code> property and so we reset to zero as a failsafe.</p>
+        <p>Sharp-eyed readers may have noticed that the value of <code>normal</code> is passed to legacy Internet Explorer versions using the star-hack. This is because IE &lt; 8 doesn&#8217;t understand the <code>inherit</code> property and so we reset to <code>normal</code> as a failsafe.</p>
         <h3 id="h8-2">Save an HTTP request</h3>
         <p>The CSS file is miniscule and you may wish to set-up a task runner to concatenate it into your main CSS file during the build process.</p>
         <h3 id="h8-3">Tweaking line-height</h3>
@@ -367,15 +394,15 @@
     <h1><a href="http://en.wikipedia.org/wiki/Dracula" title="The Dracula wikipedia page">Dracula</a></h1>
     <footer>
         <p id="fn1"><a href="#r1">(1)</a> Of course, you can always use Javascript to inject the <code>&lt;span class="slabtext"&gt;</code> elements into the headline before calling the plugin &ndash; which would keep the markup squeaky clean and cruft free. Here&#8217;s a quick example of how it might be done:</p>
-        <pre><code>var stS = "&lt;span class='slabtext '>",
-    stE = "&lt;/span>",
+        <pre><code><span class="hl-1">var</span> stS = <span class="hl-2">"&lt;span class='slabtext'>"</span>,
+    stE = <span class="hl-2">"&lt;/span>"</span>,
     txt = [
-        "For one night only",
-        "Jackie Mittoo",
-        "with special Studio One guests",
-        "Dillinger &amp; Lone Ranger"];
+        <span class="hl-2">"For one night only"</span>,
+        <span class="hl-2">"Jackie Mittoo"</span>,
+        <span class="hl-2">"with special Studio One guests"</span>,
+        <span class="hl-2">"Dillinger &amp; Lone Ranger"</span>];
 
-$("#myHeader").html(stS + txt.join(stE + stS) + stE).slabText();</code></pre>
+$(<span class="hl-2">"#myHeader"</span>).<span class="hl-1">html</span>(stS + txt.<span class="hl-1">join</span>(stE + stS) + stE).slabText();</code></pre>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="js/jquery.slabtext.min.js"></script>
