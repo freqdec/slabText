@@ -1,0 +1,25 @@
+{
+  "name": "slabText",
+  "version": "2.4.0",
+  "main": [
+    "js/jquery.slabtext.js",
+    "css/slabtext.css"
+  ],
+  "dependencies": {
+    "jquery": ">=1.4.2"
+  },
+  "homepage": "https://github.com/freqdec/slabText",
+  "authors": [
+    "Brian McAllister"
+  ],
+  "description": "A jQuery plugin for producing big, bold & responsive headlines.",
+  "keywords": [
+    "text",
+    "headlines"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ]
+}
